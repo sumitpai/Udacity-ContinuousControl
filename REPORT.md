@@ -37,13 +37,15 @@ For multi arm task, I use a single agent trained using actor-critic algorithm as
 ## Results
 
 ![result](images/result_single_arm.png)
+
 The above graph is for single arm reacher task. We can see (in the graph) that during the initial process of exploration, the model is learning slowly and getting less rewards at the begining. After a certain stage(around 150 epochs), when the model starts to exploit, the moving average of rewards shoots up. The model is able to acheive the goal(moving average of 30) in 285 episodes. 
 
-![result](images/result_multi_arm.png)
-The above graph is for multi arm reacher task. I used similar network architecture, except that the action input for multiarm task for critic network was given after 1st hidden layer (hence the number of trainable parameters were slightly lower compared to single arm task). The hyperparameters were exactly the same as previous task. The network was able to acheive an average score over all agents averaged in 267 episodes. Emperically, I observed that if I had used the same configuration for the network architecture as in single arm task, where the action input was concatinated with state vector at input layer, the training starts smoothly and it gets gradual increase in rewards at the beginning but after a few epochs the rewards drop drastically and network diverges. The reason for this divergence is not known and needs to be explored.   
+![result_multiarm](images/result_multi_arm.png)
+
+The above graph is for multi arm reacher task. I used similar network architecture, except that the action input for multiarm task for critic network was given after 1st hidden layer (hence the number of trainable parameters were slightly lower compared to single arm task). The hyperparameters were exactly the same as previous task. The network was able to acheive an average score over all agents averaged in 267 episodes. Emperically, I observed that if I had used the same configuration for the network architecture as in single arm task, where the action input was concatenated with state vector at input layer, the training starts smoothly and it gets gradual increase in rewards at the beginning but after a few epochs the rewards drop drastically and network diverges. The reason for this divergence is not known and needs to be explored.   
 
 If we look at the two graphs, we would notice that the rewards for the multiarm task are consistently higher especially at the begining of training. My assumption is that this could be because at each stage, instead of 1 observation (as in case of single arm), we have 20 observations (in multi arm). So, as learning progresses, when we randomly sample from the replay buffer, the chances of getting more samples from recent observations is higher i.e. the replay buffer fills 20 times faster with recent observations.
 
 ## Future Work
 
-As described in the results section, I would like to explore why the multiarm reacher had the unusual divergent behavior when we concatinated the state and actions as input to critic network. I would also like to do hyperparam search and see if we could reach the goal faster and with smaller network sizes. 
+As described in the results section, I would like to explore why the multiarm reacher had the unusual divergent behavior when we concatenated the state and actions as input to critic network. I would also like to do hyperparam search and see if we could reach the goal faster and with smaller network sizes. 
